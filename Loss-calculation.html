@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vishva Personal Use</title>
+  <style>
+    body {
+      font-weight: bold;
+      border: 5px solid #f700d8;
+      border-radius: 10px;
+      background-color: cyan;
+      font-family: serif;
+      font-style: italic;
+      margin: 10px;
+    }
+
+    .form-container {
+      max-width: 300px;
+      margin: 10px auto;
+    }
+
+    input {
+      background-color: rgb(255, 234, 0);
+      border-radius: 5px;
+      width: fit-content;
+      display: block;
+      margin: 5px;
+      padding: 10px;
+    }
+
+    button {
+      background-color: rgb(255, 0, 0);
+      color: white;
+      font-size: 15px;
+      border-radius: 5px;
+      width: fit-content;
+      display: block;
+      margin: 5px;
+      padding: 2px 10px;
+    }
+
+    td > button {
+      padding: 6px 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>
+      <center style="color: rgb(132, 0, 255); text-decoration: underline;">Do You Want Use Me</center>
+    </h2>
+
+    <!-- Delivery and Received Quantity Section -->
+    <label for="value1">Delivery Quantity:</label>
+    <input type="number" id="value1" placeholder="Enter Delivery Quantity">
+
+    <label for="value2">Received Quantity:</label>
+    <input type="number" id="value2" placeholder="Enter Received Quantity">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <p id="difference">Difference: </p>
+    <p id="percentage">Percentage: </p>
+    <hr>
+
+    <!-- Loss Percentage Section -->
+    <label for="per1">Loss I %:</label>
+    <input type="number" id="per1" placeholder="Enter percentage value">
+
+    <label for="per2">Loss II %:</label>
+    <input type="number" id="per2" placeholder="Enter percentage value">
+
+    <label for="per3">Loss III %:</label>
+    <input type="number" id="per3" placeholder="Enter percentage value">
+
+    <button onclick="calculateper()">Calculate</button>
+
+    <p id="percent1">Percentage 1: </p>
+    <p id="percent2">Percentage 2: </p>
+    <p id="percent3">Percentage 3: </p>
+
+    <button onclick="reloadPage()" style="background-color: darkgray;">Reload Page</button>
+    <hr>
+
+    <!-- Calculator Section -->
+    <h1>CALCULATOR</h1>
+    <input type="text" name="calc" id="calc" placeholder="RESULT">
+    <table>
+      <tr>
+        <td><button type="button" onclick="getValueFromButton('7')">7</button></td>
+        <td><button type="button" onclick="getValueFromButton('8')">8</button></td>
+        <td><button type="button" onclick="getValueFromButton('9')">9</button></td>
+        <td><button type="button" onclick="getValueFromButton('/')">/</button></td>
+      </tr>
+      <tr>
+        <td><button type="button" onclick="getValueFromButton('4')">4</button></td>
+        <td><button type="button" onclick="getValueFromButton('5')">5</button></td>
+        <td><button type="button" onclick="getValueFromButton('6')">6</button></td>
+        <td><button type="button" onclick="getValueFromButton('*')">*</button></td>
+      </tr>
+      <tr>
+        <td><button type="button" onclick="getValueFromButton('1')">1</button></td>
+        <td><button type="button" onclick="getValueFromButton('2')">2</button></td>
+        <td><button type="button" onclick="getValueFromButton('3')">3</button></td>
+        <td><button type="button" onclick="getValueFromButton('-')">-</button></td>
+      </tr>
+      <tr>
+        <td><button type="button" onclick="getValueFromButton('.')">.</button></td>
+        <td><button type="button" onclick="getValueFromButton('0')">0</button></td>
+        <td><button type="button" onclick="getValueFromButton('+')">+</button></td>
+        <td><button type="button" onclick="getValueFromButton('%')"><small>%</small></button></td>
+      </tr>
+      <tr>
+        <td colspan="2"><button type="button" onclick="clearTextBox()">CLEAR</button></td>
+        <td colspan="2"><button type="button" onclick="result()">ENTER</button></td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    function calculate() {
+      const value1 = parseFloat(document.getElementById('value1').value);
+      const value2 = parseFloat(document.getElementById('value2').value);
+
+      if (isNaN(value1) || isNaN(value2)) {
+        alert("Please enter valid numbers for both values.");
+        return;
+      }
+
+      const difference = value1 - value2;
+      const percentage = (difference / value1) * 100;
+
+      document.getElementById('difference').innerText = `Difference: ${difference}`;
+      document.getElementById('percentage').innerText = `Percentage: ${percentage.toFixed(2)}%`;
+    }
+
+    function calculateper() {
+      const value1 = parseFloat(document.getElementById('value1').value);
+      const value11 = parseFloat(document.getElementById('per1').value);
+      const value22 = parseFloat(document.getElementById('per2').value);
+      const value33 = parseFloat(document.getElementById('per3').value);
+
+      if (isNaN(value1) || isNaN(value11) || isNaN(value22) || isNaN(value33)) {
+        alert("Please enter valid numbers.");
+        return;
+      }
+
+      const percentage1 = value1 - (value1 * value11 / 100);
+      const percentage2 = value1 - (value1 * (value11 + value22) / 100);
+      const percentage3 = value1 - (value1 * (value11 + value22 + value33) / 100);
+
+      document.getElementById('percent1').style.color = "red";
+      document.getElementById('percent2').style.color = "green";
+      document.getElementById('percent3').style.color = "darkblue";
+
+      document.getElementById('percent1').innerText = `I Value: ${percentage1.toFixed(2)}`;
+      document.getElementById('percent2').innerText = `II Value: ${percentage2.toFixed(2)}`;
+      document.getElementById('percent3').innerText = `III Value: ${percentage3.toFixed(2)}`;
+    }
+
+    function reloadPage() {
+      location.reload();
+    }
+
+    function getValueFromButton(value) {
+      document.getElementById("calc").value += value;
+    }
+
+    function clearTextBox() {
+      document.getElementById('calc').value = '';
+    }
+
+    function result() {
+      try {
+        const expression = document.getElementById('calc').value;
+        const output = eval(expression); // Replace with a safer method like math.js if needed
+        document.getElementById('calc').value = output;
+      } catch {
+        alert("Invalid expression");
+      }
+    }
+  </script>
+</body>
+</html>
